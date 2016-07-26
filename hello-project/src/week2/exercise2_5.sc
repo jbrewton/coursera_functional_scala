@@ -6,9 +6,9 @@ object exercise2_5 {
   x.numer                                         //> res0: Int#1068 = 1
   x.denom                                         //> res1: Int#1068 = 3
   x.sub(y).sub(z)                                 //> res2: Rational#33529 = -79/42
-  y.add(y)                                        //> res3: Rational#33529 = 10/7
-  x.less(y)                                       //> res4: Boolean#2475 = true
-  x.max(y)                                        //> res5: Rational#33529 = 5/7
+  y + y                                           //> res3: Rational#33529 = 10/7
+  x < y                                           //> res4: Boolean#2475 = true
+  x max y                                         //> res5: Rational#33529 = 5/7
 	
 	new Rational(2)                           //> res6: Rational#33529 = 2/1
 }
@@ -22,11 +22,11 @@ class Rational(x: Int, y: Int) {
 	def numer = x
 	def denom = y
 	
-	def less(that: Rational) = numer * that.denom < that.numer * denom
+	def < (that: Rational) = numer * that.denom < that.numer * denom
 	
-	def max(that: Rational) = if (this.less(that)) that else this
+	def max(that: Rational) = if (this < that) that else this
 	
-	def add(that: Rational) =
+	def + (that: Rational) =
 		new Rational(
 			numer * that.denom + that.numer * denom,
 			denom * that.denom
@@ -37,7 +37,7 @@ class Rational(x: Int, y: Int) {
 		numer/g + "/" + denom/g
 	}
 	
-	def neg: Rational = new Rational(-numer, denom)
+	def unary_- : Rational = new Rational(-numer, denom)
 	
-	def sub(that: Rational) = add(that.neg)
+	def sub(that: Rational) = this + (-that)
 }
